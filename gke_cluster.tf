@@ -1,6 +1,6 @@
 resource "google_container_cluster" "primary" {
   name     = "my-gke-cluster"
-  location = "us-central1"
+  location = "us-central1-a"
 
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
@@ -20,7 +20,7 @@ resource "google_container_cluster" "primary" {
 
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "my-node-pool"
-  location   = "us-central1"
+  location   = "us-central1-a"
   cluster    = google_container_cluster.primary.name
   node_count = 1
 
