@@ -1,6 +1,6 @@
 provider "helm" {
   kubernetes {
-    config_path = "/path/to/kube_cluster.yaml"
+    config_path = "${path.root}/cluster/kubeconfig"
   }
 }
 
@@ -12,10 +12,9 @@ data "helm_repository" "argo" {
 resource "helm_release" "argocd" {
   name       = "argocd"
   repository = data.helm_repository.argo.metadata[0].name
-  chart      = "argocd"
+  chart      = "argo-cd"
   version    = "2.0.3" # application version 1.4.2
-
   values = [
-    "${file("argocd-values.yaml")}"
+    file("${path.module}/argocd-values.yaml")
   ]
 }

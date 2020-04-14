@@ -1,5 +1,5 @@
 resource "google_container_cluster" "primary" {
-  name     = "my-gke-cluster"
+  name     = var.cluster_name
   location = "us-central1-a"
 
   # We can't create a cluster with no node pool defined, but we want to only use

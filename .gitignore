@@ -1,3 +1,6 @@
 terraform_account.json
 .terraform
 .idea
+*.tfstate
+*.lock.info
+cluster/kubeconfig
