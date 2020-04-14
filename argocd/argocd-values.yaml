@@ -1,0 +1,23 @@
+## Server
+server:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    hosts: 
+      - f76aef79.ngrok.io
+    http:
+      paths:
+      - /
+  extraArgs: 
+    - --insecure
+
+## Argo Configs
+configs:
+  secret:
+    githubSecret: "testing GitOps in minikube"
+    # Argo expects the password in the secret to be bcrypt hashed. You can create this hash with
+    # `htpasswd -nbBC 10 "" $ARGO_PWD | tr -d ':\n' | sed 's/$2y/$2a/'`
+    argocdServerAdminPassword: $2a$10$T5WlXiRVO4QXSwwWOZr5leF94wAZJrSKoEwG5Ppj.uyXnOiF1GPx2 #admin
