@@ -1,6 +1,6 @@
 provider "google" {
   credentials = file("terraform_account.json")
-  project = "ahmedmohamed"
+  project = "gitopsin30seconds"
   region  = "us-central1"
 }
 
