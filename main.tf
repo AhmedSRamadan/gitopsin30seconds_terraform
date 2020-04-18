@@ -1,15 +1,17 @@
+# remote backend
+terraform {
+  backend "gcs" {
+    credentials = "terraform_account.json"
+    bucket      = "gitopsin30seconds_terraformstate"
+    prefix      = "terraform/state"
+  }
+}
+
+# Google Cloud Provider
 provider "google" {
   credentials = file("terraform_account.json")
   project = "gitopsin30seconds"
   region  = "us-central1"
-}
-
-terraform {
-  backend "gcs" {
-    credentials = "terraform_account.json"
-    bucket      = "gitopsin30seconds_tfstate"
-    prefix      = "terraform/state"
-  }
 }
 
 module "k8s_cluster" {
@@ -19,4 +21,6 @@ module "k8s_cluster" {
 
 module "argocd" {
   source = "./argocd"
+  kubeconfig_path = module.k8s_cluster.kubeconfig_path
+  argocd_server = module.k8s_cluster.cluster_domain
 }

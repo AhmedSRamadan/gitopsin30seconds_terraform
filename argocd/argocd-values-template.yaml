@@ -7,10 +7,12 @@ server:
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     hosts: 
-      - f76aef79.ngrok.io
+      - ${argocd_server}
     http:
       paths:
-      - /
+      - backend:
+          serviceName: argocd-server
+          servicePort: https
   extraArgs: 
     - --insecure
 

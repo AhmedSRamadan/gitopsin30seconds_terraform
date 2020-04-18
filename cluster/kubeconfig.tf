@@ -1,7 +1,12 @@
+locals {
+  current_context = "tf-k8s-gcp-gitopsin30seconds"
+}
+
 data "template_file" "kubeconfig" {
   template = file("${path.module}/kubeconfig-template.yaml")
 
   vars = {
+    current_context = local.current_context
     cluster_name    = google_container_cluster.primary.name
     user_name       = google_container_cluster.primary.master_auth[0].username
     user_password   = google_container_cluster.primary.master_auth[0].password
@@ -15,8 +20,4 @@ data "template_file" "kubeconfig" {
 resource "local_file" "kubeconfig" {
   content  = data.template_file.kubeconfig.rendered
   filename = "${path.module}/kubeconfig"
-}
-
-output "kubeconfig_path" {
-  value = local_file.kubeconfig.filename
 }

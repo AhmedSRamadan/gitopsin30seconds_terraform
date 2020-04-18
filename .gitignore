@@ -3,4 +3,6 @@ terraform_account.json
 .idea
 *.tfstate
 *.lock.info
+.DS_Store
 cluster/kubeconfig
+graph.svg

@@ -1,6 +1,6 @@
 provider "helm" {
   kubernetes {
-    config_path = "${path.root}/cluster/kubeconfig"
+    config_path = var.kubeconfig_path
   }
 }
 
@@ -9,12 +9,20 @@ data "helm_repository" "argo" {
   url  = "https://argoproj.github.io/argo-helm"
 }
 
+data "template_file" "argocd-values" {
+  template = file("${path.module}/argocd-values-template.yaml")
+
+  vars = {
+    argocd_server = var.argocd_server
+  }
+}
+
 resource "helm_release" "argocd" {
   name       = "argocd"
   repository = data.helm_repository.argo.metadata[0].name
   chart      = "argo-cd"
   version    = "2.0.3" # application version 1.4.2
   values = [
-    file("${path.module}/argocd-values.yaml")
+    data.template_file.argocd-values.rendered
   ]
 }
