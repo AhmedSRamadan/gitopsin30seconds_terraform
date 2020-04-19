@@ -9,8 +9,8 @@ resource "google_container_cluster" "primary" {
   initial_node_count       = 1
 
   master_auth {
-    username = ""
-    password = ""
+    username = var.master_username
+    password = var.master_password
 
     client_certificate_config {
       issue_client_certificate = true
@@ -37,4 +37,16 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
       "https://www.googleapis.com/auth/monitoring",
     ]
   }
+}
+
+module "cluster_config" {
+  source = "./cluster_config"
+}
+
+module "argocd" {
+  source        = "./argocd"
+  argocd_server = google_container_cluster.primary.endpoint
+
+  # to create dependecy on cluster_config module
+  cluster_config_ready = module.cluster_config.cluster_config_staus
 }

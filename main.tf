@@ -10,17 +10,15 @@ terraform {
 # Google Cloud Provider
 provider "google" {
   credentials = file("terraform_account.json")
-  project = "gitopsin30seconds"
-  region  = "us-central1"
+  project     = "gitopsin30seconds"
+  region      = "us-central1"
 }
 
 module "k8s_cluster" {
-  source = "./cluster"
-  cluster_name = "gitops-in-30-seconds-gke"
-}
+  source          = "./cluster"
+  cluster_name    = "gitops-in-30-seconds-gke"
+  master_username = "admin"
 
-module "argocd" {
-  source = "./argocd"
-  kubeconfig_path = module.k8s_cluster.kubeconfig_path
-  argocd_server = module.k8s_cluster.cluster_domain
+  # passed via environment variable TF_VAR_master_password
+  master_password = var.master_password
 }
