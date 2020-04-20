@@ -48,5 +48,5 @@ module "argocd" {
   argocd_server = google_container_cluster.primary.endpoint
 
   # to create dependecy on cluster_config module
-  cluster_config_ready = module.cluster_config.cluster_config_staus
+  cluster_config_staus = module.cluster_config.cluster_config_staus
 }
