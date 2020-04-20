@@ -1,6 +1,6 @@
 resource "google_container_cluster" "primary" {
-  name     = "my-gke-cluster"
-  location = "us-central1"
+  name     = var.cluster_name
+  location = "us-central1-a"
 
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
@@ -9,24 +9,24 @@ resource "google_container_cluster" "primary" {
   initial_node_count       = 1
 
   master_auth {
-    username = ""
-    password = ""
+    username = var.master_username
+    password = var.master_password
 
     client_certificate_config {
-      issue_client_certificate = false
+      issue_client_certificate = true
     }
   }
 }
 
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "my-node-pool"
-  location   = "us-central1"
+  location   = "us-central1-a"
   cluster    = google_container_cluster.primary.name
   node_count = 1
 
   node_config {
     preemptible  = true
-    machine_type = "n1-standard-1"
+    machine_type = "n1-standard-2"
 
     metadata = {
       disable-legacy-endpoints = "true"
@@ -39,3 +39,14 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
 }
 
+module "cluster_config" {
+  source = "./cluster_config"
+}
+
+module "argocd" {
+  source        = "./argocd"
+  argocd_server = google_container_cluster.primary.endpoint
+
+  # to create dependecy on cluster_config module
+  cluster_config_staus = module.cluster_config.cluster_config_staus
+}

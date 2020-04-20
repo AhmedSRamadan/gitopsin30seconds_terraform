@@ -1,2 +1,8 @@
 terraform_account.json
 .terraform
+.idea
+*.tfstate
+*.lock.info
+.DS_Store
+cluster/kubeconfig
+graph.svg

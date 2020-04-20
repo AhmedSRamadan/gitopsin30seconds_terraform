@@ -1,0 +1,37 @@
+## Argo Configs
+configs:
+  secret:
+    githubSecret: "testing GitOps in minikube"
+    # Argo expects the password in the secret to be bcrypt hashed. You can create this hash with
+    # `htpasswd -nbBC 10 "" $ARGO_PWD | tr -d ':\n' | sed 's/$2y/$2a/'`
+    argocdServerAdminPassword: $2a$10$T5WlXiRVO4QXSwwWOZr5leF94wAZJrSKoEwG5Ppj.uyXnOiF1GPx2 #admin
+
+controller:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+
+repoServer:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+
+server:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+
+dex:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+
+redis:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
