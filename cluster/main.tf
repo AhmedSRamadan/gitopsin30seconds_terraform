@@ -50,3 +50,7 @@ module "argocd" {
   # to create dependecy on cluster_config module
   cluster_config_staus = module.cluster_config.cluster_config_staus
 }
+
+module "ingress_controller" {
+  source = "./ingress_controller"
+}
