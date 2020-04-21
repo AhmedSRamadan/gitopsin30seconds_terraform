@@ -14,6 +14,11 @@ server:
         path: /argocd
   extraArgs: 
     - --insecure
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+
 configs:
   secret:
     githubSecret: "testing GitOps in minikube"
@@ -28,12 +33,6 @@ controller:
       memory: 256Mi
 
 repoServer:
-  resources:
-    limits:
-      cpu: 100m
-      memory: 256Mi
-
-server:
   resources:
     limits:
       cpu: 100m
