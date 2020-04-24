@@ -5,14 +5,16 @@ server:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
-   #  nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-   #  nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+#      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+      nginx.ingress.kubernetes.io/use-regex: "true"
+    hosts:
+      []
+    # - argocd.example.com
     paths:
-      - backend:
-          serviceName: argocd-server
-          servicePort: http
-        path: /argocd
-  extraArgs: 
+#      - /
+      - /.*
+  extraArgs:
     - --insecure
   resources:
     limits:

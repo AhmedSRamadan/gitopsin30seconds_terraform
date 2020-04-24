@@ -22,7 +22,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "my-node-pool"
   location   = "us-central1-a"
   cluster    = google_container_cluster.primary.name
-  node_count = 0
+  node_count = 1
 
   node_config {
     preemptible  = true
@@ -43,14 +43,14 @@ module "cluster_config" {
   source = "./cluster_config"
 }
 
+module "ingress_controller" {
+  source = "./ingress_controller"
+}
+
 module "argocd" {
   source        = "./argocd"
   argocd_server = google_container_cluster.primary.endpoint
 
   # to create dependecy on cluster_config module
   cluster_config_staus = module.cluster_config.cluster_config_staus
-}
-
-module "ingress_controller" {
-  source = "./ingress_controller"
 }

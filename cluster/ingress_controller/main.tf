@@ -1,13 +1,19 @@
-#helm repo add bitnami https://charts.bitnami.com/bitnami
-
 data "helm_repository" "ingress_controller" {
-  name = "bitnami"
-  url  = "https://charts.bitnami.com/bitnami"
+  name = "stable"
+  url  = "https://kubernetes-charts.storage.googleapis.com"
+}
+
+data "template_file" "nginx-ingress-controller-values" {
+  template = file("${path.module}/nginx-ingress-controller-values.yaml")
 }
 
 resource "helm_release" "nginx_ingress_controller" {
-  name       = "nginx-ingress-controller"
+  name       = "nginx-ingress"
   repository = data.helm_repository.ingress_controller.metadata[0].name
-  chart      = "nginx-ingress-controller"
-  version    = "5.3.16" # application version 0.30.0
+  chart      = "nginx-ingress"
+  version    = "1.36.3" # application version 0.30.0
+  //  values = [
+  //    data.template_file.nginx-ingress-controller-values.rendered
+  //  ]
+  //  timeout = 600 # in seconds
 }
