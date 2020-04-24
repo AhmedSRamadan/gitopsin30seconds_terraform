@@ -43,6 +43,10 @@ module "cluster_config" {
   source = "./cluster_config"
 }
 
+module "ingress_controller" {
+  source = "./ingress_controller"
+}
+
 module "argocd" {
   source        = "./argocd"
   argocd_server = google_container_cluster.primary.endpoint

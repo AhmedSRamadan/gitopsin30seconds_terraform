@@ -4,11 +4,7 @@ data "helm_repository" "argo" {
 }
 
 data "template_file" "argocd-values" {
-  template = file("${path.module}/argocd-values-template.yaml")
-
-  vars = {
-    argocd_server = var.argocd_server
-  }
+  template = file("${path.module}/argocd-values.yaml")
 }
 
 resource "helm_release" "argocd" {

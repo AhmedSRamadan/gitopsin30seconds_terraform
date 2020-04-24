@@ -1,4 +1,26 @@
 ## Argo Configs
+## Server
+server:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+#      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+      nginx.ingress.kubernetes.io/use-regex: "true"
+    hosts:
+      []
+    # - argocd.example.com
+    paths:
+#      - /
+      - /.*
+  extraArgs:
+    - --insecure
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+
 configs:
   secret:
     githubSecret: "testing GitOps in minikube"
@@ -13,12 +35,6 @@ controller:
       memory: 256Mi
 
 repoServer:
-  resources:
-    limits:
-      cpu: 100m
-      memory: 256Mi
-
-server:
   resources:
     limits:
       cpu: 100m
