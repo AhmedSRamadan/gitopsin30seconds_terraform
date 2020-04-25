@@ -1,0 +1,2 @@
+server: https://kubernetes.default.svc
+repo: https://github.com/AhmedSRamadan/gitopsin30seconds_k8s.git
