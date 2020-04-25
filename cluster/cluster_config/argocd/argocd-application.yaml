@@ -8,9 +8,12 @@ metadata:
 spec:
   destination:
     namespace: argocd
-    server: {{ .Values.server }}
+    server: https://kubernetes.default.svc
   project: default
   source:
     path: apps
-    repoURL: {{ .Values.repo }}
+    repoURL: https://github.com/AhmedSRamadan/gitopsin30seconds_k8s.git
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      selfHeal: true

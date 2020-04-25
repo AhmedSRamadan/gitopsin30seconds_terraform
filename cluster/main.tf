@@ -41,6 +41,7 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
 
 module "cluster_config" {
   source = "./cluster_config"
+  cluster_node_pool_id = google_container_node_pool.primary_preemptible_nodes.id
 }
 
 module "ingress_controller" {

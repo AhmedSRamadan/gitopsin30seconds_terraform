@@ -1,12 +1,6 @@
 ## Argo Configs
 ## Server
 server:
-  config:
-    repositories: |
-      - url: https://github.com/AhmedSRamadan/gitopsin30seconds_k8s.git
-        sshPrivateKeySecret:
-          name: secret-name
-          key: sshPrivateKey
   ingress:
     enabled: true
     annotations:
@@ -16,9 +10,7 @@ server:
       nginx.ingress.kubernetes.io/use-regex: "true"
     hosts:
       []
-    # - argocd.example.com
     paths:
-#      - /
       - /.*
   extraArgs:
     - --insecure

@@ -6,3 +6,4 @@ terraform_account.json
 .DS_Store
 cluster/kubeconfig
 graph.svg
+cluster/cluster_config/kube_config.yaml
